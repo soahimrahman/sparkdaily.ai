@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Daily Routine AI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bgGlow"></div>
+
+  <div class="shell">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sbHeader">
+        <div class="brand">
+          <div class="brandLogo">DR</div>
+          <div class="brandText">
+            <div class="brandTitle">Daily Routine</div>
+            <div class="brandSub">AI Assistant</div>
+          </div>
+        </div>
+        <button id="newChatBtn" class="iconBtn" title="New chat">+</button>
+      </div>
+
+      <div class="sbSearch">
+        <input id="searchInput" class="sbInput" placeholder="Search chats..." />
+      </div>
+
+      <div class="sbSectionTitle">Chats</div>
+      <div id="chatList" class="chatList"></div>
+
+      <div class="sbFooter">
+        <button id="exportBtn" class="btn ghost full">Export chat</button>
+        <div class="tiny">Saved on this PC • localStorage</div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <header class="topbar">
+        <div class="topLeft">
+          <div class="avatar">AI</div>
+          <div>
+            <div id="activeChatTitle" class="topTitle">New Chat</div>
+            <div class="topSub">Plan your day. Track habits. Stay disciplined.</div>
+          </div>
+        </div>
+
+        <div class="topActions">
+          <button id="renameBtn" class="btn ghost">Rename</button>
+          <button id="deleteBtn" class="btn danger">Delete</button>
+        </div>
+      </header>
+
+      <section class="quickRow">
+        <button class="chip" data-prompt="Today I have 3 client works. Make me a schedule.">Make schedule</button>
+        <button class="chip" data-prompt="What should I do next right now?">Next action</button>
+        <button class="chip" data-prompt="I’m behind. Reorganize my tasks and day plan.">Reorganize</button>
+        <button class="chip" data-prompt="Create a healthy routine with water, meals, exercise, and sleep reminders.">Healthy routine</button>
+      </section>
+
+      <section id="messages" class="messages"></section>
+
+      <div id="typing" class="typing hidden">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <span>AI is typing…</span>
+      </div>
+
+      <footer class="composer">
+        <div class="composerInner">
+          <input id="msgInput" class="input" placeholder="Type a message… (Enter to send)" />
+          <button id="sendBtn" class="btn primary">Send</button>
+        </div>
+        <div class="composerHint">
+          Tip: This is UI + history. Next step we connect real AI safely (backend).
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script src="ai.js"></script>
+</body>
+</html>

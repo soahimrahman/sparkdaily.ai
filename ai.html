@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Daily Routine AI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="app" id="app">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="brand">
+          <div class="logo">DR</div>
+          <div class="brandText">
+            <div class="brandName">Daily Routine</div>
+            <div class="brandSub">AI Assistant</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sb-actions">
+        <a class="btn ghost" href="index.html" id="backToSiteBtn">← Back to website</a>
+
+        <button class="btn primary" id="newChatBtn">
+          <span class="btnIcon">＋</span> New chat
+        </button>
+
+        <button class="btn ghost" id="searchToggleBtn">
+          <span class="btnIcon">⌕</span> Search chats
+        </button>
+
+        <div class="searchWrap hidden" id="searchWrap">
+          <input id="searchInput" class="input" placeholder="Search chats…" />
+        </div>
+      </div>
+
+      <div class="sb-history">
+        <div class="blockTitle">Chats</div>
+        <div class="chatList" id="chatList"></div>
+      </div>
+
+      <div class="sb-bottom" id="profileBtn">
+        <img class="avatar" id="avatarImg" alt="Profile" src="https://i.pravatar.cc/80?img=3" />
+        <div class="profileText">
+          <div class="profileName" id="profileName">Soahim Rahman</div>
+          <div class="profileSub">View profile</div>
+        </div>
+        <div class="chev">▾</div>
+      </div>
+
+      <!-- Profile menu -->
+      <div class="menu hidden" id="profileMenu">
+        <button class="menuItem" id="menuSettings">⚙️ Settings</button>
+        <button class="menuItem" id="menuCustomize">🎨 Customization</button>
+        <button class="menuItem" id="menuHelp">❓ Help</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      
+      <!-- TOP BAR -->
+      <header class="topbar">
+        <div class="leftTop">
+          <button class="iconBtn" id="openSidebarBtn" title="Toggle sidebar" aria-label="Toggle sidebar">
+            ☰
+          </button>
+
+          <div class="topTitle">
+            <div class="titleLine">
+              <span class="pill">AI</span>
+              <span id="activeChatTitle" class="activeChatTitle">New chat</span>
+            </div>
+            <div class="subLine" id="activeChatSub">
+              Ask anything. Plan your day. Brainstorm ideas.
+            </div>
+          </div>
+        </div>
+
+        <div class="rightTop">
+          <label class="tempToggle" title="Temporary Chat (not saved)">
+            <input type="checkbox" id="tempChatToggle" />
+            <span class="tempPill">Temporary</span>
+          </label>
+
+          <button class="iconBtn" id="chatHeaderMenuBtn" title="Chat menu" aria-label="Chat menu">⋯</button>
+        </div>
+      </header>
+
+      <!-- CHAT AREA -->
+      <section class="chatArea">
+        <div class="messages" id="messages"></div>
+
+        <div class="typing hidden" id="typing">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="typingText">AI is typing…</span>
+        </div>
+
+        <!-- COMPOSER -->
+        <div class="composer">
+          <div class="composerTop">
+            <div class="selectors">
+              <div class="selectWrap">
+                <label class="miniLabel">AI Provider</label>
+                <select class="select" id="modelSelect"></select>
+              </div>
+            </div>
+          </div>
+
+          <div class="composerBottom">
+            <input
+              type="file"
+              id="imageInput"
+              accept="image/*,.pdf,.doc,.docx,.txt,.zip,.rar,.7z,.psd,.ai,.eps"
+              hidden
+            />
+
+            <button class="iconBtn upload" id="uploadBtn" title="Attach file" aria-label="Attach file">
+              +
+            </button>
+
+            <div class="inputWrap">
+              <textarea
+                id="msgInput"
+                class="msgInput"
+                rows="1"
+                placeholder="Message Daily Routine AI…"
+              ></textarea>
+
+              <div class="imgPreview hidden" id="imgPreview">
+                <img id="imgPreviewImg" alt="preview" />
+                <button class="iconBtn small" id="removeImgBtn" title="Remove image">
+                  ✕
+                </button>
+              </div>
+            </div>
+
+            <button class="sendBtn" id="sendBtn">Send</button>
+          </div>
+
+          <div class="composerHint">
+            Tip: Enter = send • Shift+Enter = new line • Temporary chat won’t save history.
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- CHAT ITEM MENU -->
+    <div class="menu hidden" id="chatItemMenu">
+      <button class="menuItem" id="menuPin">📌 Pin</button>
+      <button class="menuItem" id="menuUnpin">📍 Unpin</button>
+      <button class="menuItem danger" id="menuDelete">🗑️ Delete</button>
+    </div>
+
+    <!-- HEADER MENU -->
+    <div class="menu hidden" id="chatHeaderMenu">
+      <button class="menuItem" id="hdrRename">✏️ Rename</button>
+      <button class="menuItem" id="hdrClear">🧹 Clear chat</button>
+      <button class="menuItem" id="hdrExport">⬇️ Export</button>
+    </div>
+
+  </div>
+
+  <script src="ai.js" defer></script>
+</body>
+</html>

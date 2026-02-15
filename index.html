@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Routine • Dashboard</title>
+
+  <!-- Use your existing theme -->
+  <link rel="stylesheet" href="dashboard.css" />
+
+  <!-- Optional: if you use icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+
+<body>
+  <div class="app" id="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <div class="brand">
+          <div class="brand-logo">DR</div>
+          <div class="brand-text">
+            <div class="brand-title">Daily Routine</div>
+            <div class="brand-sub">Work Tracker</div>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <a class="nav-item active" href="index.html">
+            <span class="nav-dot"></span>
+            Dashboard
+          </a>
+          <a class="nav-item" href="tasks.html">
+            <span class="nav-dot"></span>
+            Tasks
+          </a>
+          <a class="nav-item" href="habits.html">
+            <span class="nav-dot"></span>
+            Habits
+          </a>
+          <a class="nav-item" href="ai.html">
+            <span class="nav-dot"></span>
+            AI Assistant
+          </a>
+          <a class="nav-item" href="settings.html">
+            <span class="nav-dot"></span>
+            Settings
+          </a>
+        </nav>
+
+        <div class="sidebar-actions">
+          <button class="btn ghost" id="btnCollapse">Collapse</button>
+        </div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="profile" id="profile">
+          <div class="avatar">S</div>
+          <div class="profile-meta">
+            <div class="profile-name">Soahim</div>
+            <div class="profile-sub">Local mode</div>
+          </div>
+          <button class="btn icon" id="btnProfileMenu" aria-label="Profile menu">⋯</button>
+        </div>
+
+        <div class="menu hidden" id="profileMenu">
+          <button class="menu-item" onclick="location.href='settings.html'">Settings</button>
+          <button class="menu-item" onclick="alert('Help coming soon')">Help</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <!-- HEADER -->
+      <header class="header">
+        <div class="header-left">
+          <button class="btn icon" id="btnSidebarToggle" aria-label="Toggle sidebar">☰</button>
+          <div class="header-title">
+            <div class="title">Dashboard</div>
+            <div class="subtitle" id="todayLabel">Today</div>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <button class="btn" id="btnQuickAdd">+ Quick Add</button>
+          <button class="btn ghost" id="btnRefresh">Refresh</button>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <section class="content">
+
+        <!-- TOP STATS -->
+        <div class="grid stats-grid">
+          <div class="card">
+            <div class="card-title">Today Tasks</div>
+            <div class="card-value" id="statTodayTasks">0</div>
+            <div class="card-sub">Due today</div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Overdue</div>
+            <div class="card-value" id="statOverdue">0</div>
+            <div class="card-sub">Needs attention</div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Completed</div>
+            <div class="card-value" id="statCompleted">0</div>
+            <div class="card-sub">This week</div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Habits</div>
+            <div class="card-value" id="statHabits">0</div>
+            <div class="card-sub">Done today</div>
+          </div>
+        </div>
+
+        <!-- MAIN GRID -->
+        <div class="grid main-grid">
+
+          <!-- TODAY TASKS -->
+          <div class="card card-lg">
+            <div class="card-head">
+              <div>
+                <div class="card-title">Today</div>
+                <div class="card-sub">Your focus list</div>
+              </div>
+              <a class="link" href="tasks.html">View all</a>
+            </div>
+
+            <div class="list" id="todayTasksList">
+              <!-- JS will render items here -->
+              <div class="empty" id="todayEmpty">No tasks for today ✅</div>
+            </div>
+          </div>
+
+          <!-- UPCOMING + HABITS -->
+          <div class="stack">
+
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <div class="card-title">Upcoming</div>
+                  <div class="card-sub">Next 7 days</div>
+                </div>
+              </div>
+
+              <div class="list" id="upcomingList">
+                <div class="empty" id="upcomingEmpty">No upcoming deadlines.</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <div>
+                  <div class="card-title">Habits</div>
+                  <div class="card-sub">Quick check</div>
+                </div>
+                <a class="link" href="habits.html">Open</a>
+              </div>
+
+              <div class="list" id="habitsList">
+                <div class="empty" id="habitsEmpty">No habits tracked yet.</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- WEEK SUMMARY -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">Weekly Summary</div>
+              <div class="card-sub">Simple progress overview</div>
+            </div>
+          </div>
+
+          <div class="progress-wrap">
+            <div class="progress-row">
+              <div class="progress-label">Tasks Done</div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="barTasksDone" style="width: 0%;"></div>
+              </div>
+              <div class="progress-meta" id="barTasksDoneMeta">0%</div>
+            </div>
+
+            <div class="progress-row">
+              <div class="progress-label">Habits Done</div>
+              <div class="progress-bar">
+                <div class="progress-fill" id="barHabitsDone" style="width: 0%;"></div>
+              </div>
+              <div class="progress-meta" id="barHabitsDoneMeta">0%</div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- QUICK ADD MODAL (basic) -->
+      <div class="modal hidden" id="quickAddModal" aria-hidden="true">
+        <div class="modal-card">
+          <div class="modal-head">
+            <div class="modal-title">Quick Add Task</div>
+            <button class="btn icon" id="btnCloseModal" aria-label="Close">✕</button>
+          </div>
+
+          <div class="modal-body">
+            <label class="field">
+              <span class="label">Task title</span>
+              <input class="input" id="qaTitle" type="text" placeholder="e.g. Finish client logo revisions" />
+            </label>
+
+            <div class="row">
+              <label class="field">
+                <span class="label">Priority</span>
+                <select class="input" id="qaPriority">
+                  <option value="low">Low</option>
+                  <option value="med" selected>Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span class="label">Due</span>
+                <input class="input" id="qaDue" type="datetime-local" />
+              </label>
+            </div>
+
+            <label class="field">
+              <span class="label">Category</span>
+              <input class="input" id="qaCategory" type="text" placeholder="client / personal / admin" />
+            </label>
+          </div>
+
+          <div class="modal-foot">
+            <button class="btn ghost" id="btnCancelAdd">Cancel</button>
+            <button class="btn" id="btnSaveAdd">Save</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Page logic (we’ll create dashboard.js next) -->
+  <script src="dashboard.js"></script>
+
+  <!-- Minimal UI behavior (sidebar + menu) -->
+  <script>
+    const app = document.getElementById("app");
+    const sidebar = document.getElementById("sidebar");
+
+    const btnCollapse = document.getElementById("btnCollapse");
+    const btnSidebarToggle = document.getElementById("btnSidebarToggle");
+
+    const profile = document.getElementById("profile");
+    const profileMenu = document.getElementById("profileMenu");
+    const btnProfileMenu = document.getElementById("btnProfileMenu");
+
+    btnCollapse?.addEventListener("click", () => app.classList.toggle("collapsed"));
+    btnSidebarToggle?.addEventListener("click", () => app.classList.toggle("collapsed"));
+
+    btnProfileMenu?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      profileMenu.classList.toggle("hidden");
+    });
+
+    document.addEventListener("click", () => {
+      profileMenu.classList.add("hidden");
+    });
+
+    // Quick add modal basic toggles (dashboard.js will handle saving later)
+    const quickAddModal = document.getElementById("quickAddModal");
+    document.getElementById("btnQuickAdd")?.addEventListener("click", () => {
+      quickAddModal.classList.remove("hidden");
+      quickAddModal.setAttribute("aria-hidden", "false");
+    });
+
+    const closeModal = () => {
+      quickAddModal.classList.add("hidden");
+      quickAddModal.setAttribute("aria-hidden", "true");
+    };
+
+    document.getElementById("btnCloseModal")?.addEventListener("click", closeModal);
+    document.getElementById("btnCancelAdd")?.addEventListener("click", closeModal);
+
+    // Today label
+    const todayLabel = document.getElementById("todayLabel");
+    const d = new Date();
+    todayLabel.textContent = d.toLocaleDateString(undefined, { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+  </script>
+</body>
+</html>

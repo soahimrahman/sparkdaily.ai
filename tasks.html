@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Routine • Tasks</title>
+
+  <!-- Global theme -->
+  <link rel="stylesheet" href="style.css" />
+  <!-- Tasks-only -->
+  <link rel="stylesheet" href="tasks.css" />
+</head>
+
+<body>
+  <div class="app" id="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sb-top">
+        <div class="brand">
+          <div class="logo">DR</div>
+          <div>
+            <div class="brandName">Daily Routine</div>
+            <div class="brandSub">Work Tracker</div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a class="nav-item" href="index.html"><span class="nav-dot"></span>Dashboard</a>
+        <a class="nav-item active" href="tasks.html"><span class="nav-dot"></span>Tasks</a>
+        <a class="nav-item" href="habits.html"><span class="nav-dot"></span>Habits</a>
+        <a class="nav-item" href="ai.html"><span class="nav-dot"></span>AI Assistant</a>
+        <a class="nav-item" href="settings.html"><span class="nav-dot"></span>Settings</a>
+      </nav>
+
+      <div class="sb-actions">
+        <button class="btn ghost" id="btnCollapse" type="button">Collapse</button>
+      </div>
+
+      <!-- Profile -->
+      <div class="sb-bottom">
+        <div class="profile" id="profile">
+          <div class="avatar">S</div>
+          <div>
+            <div class="profileName">Soahim</div>
+            <div class="profileSub">Local mode</div>
+          </div>
+
+          <button class="btn icon sm" id="btnProfileMenu" type="button" aria-label="Profile menu">⋯</button>
+
+          <!-- menu -->
+          <div class="menu hidden" id="profileMenu">
+            <button class="menuItem" type="button" onclick="location.href='settings.html'">Settings</button>
+            <button class="menuItem" type="button" onclick="alert('Help coming soon')">Help</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="leftTop">
+          <button class="iconBtn sm" id="btnSidebarToggle" type="button" aria-label="Toggle sidebar">☰</button>
+          <div class="topTitle">
+            <div class="activeChatTitle">Tasks</div>
+            <div class="subLine">Manage client + personal work</div>
+          </div>
+        </div>
+
+        <div class="rightTop">
+          <button class="btn primary" id="btnAddTask" type="button">+ Add Task</button>
+        </div>
+      </header>
+
+      <!-- CONTENT -->
+      <section class="content">
+
+        <!-- FILTERS -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">Filters</div>
+              <div class="card-sub">Search and organize</div>
+            </div>
+          </div>
+
+          <div class="grid filters-grid">
+            <input class="input" id="searchInput" type="text" placeholder="Search tasks..." />
+
+            <select class="input" id="filterStatus">
+              <option value="all" selected>Status: All</option>
+              <option value="todo">Todo</option>
+              <option value="doing">Doing</option>
+              <option value="done">Done</option>
+            </select>
+
+            <select class="input" id="filterPriority">
+              <option value="all" selected>Priority: All</option>
+              <option value="high">High</option>
+              <option value="med">Medium</option>
+              <option value="low">Low</option>
+            </select>
+
+            <select class="input" id="filterWhen">
+              <option value="all" selected>When: All</option>
+              <option value="today">Today</option>
+              <option value="upcoming">Upcoming</option>
+              <option value="overdue">Overdue</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- TASKS -->
+        <div class="card card-lg" style="margin-top:12px;">
+          <div class="card-head">
+            <div>
+              <div class="card-title">Your Tasks</div>
+              <div class="card-sub" id="tasksCount">0 tasks</div>
+            </div>
+            <a class="link" href="index.html">Back to dashboard</a>
+          </div>
+
+          <div class="list" id="tasksList">
+            <div class="empty" id="tasksEmpty">No tasks yet. Click “Add Task” ✅</div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ADD TASK MODAL -->
+      <div class="modal hidden" id="taskModal" aria-hidden="true">
+        <div class="modal-card">
+          <div class="modal-head">
+            <div class="modal-title">Add Task</div>
+            <button class="iconBtn sm" id="btnCloseTaskModal" type="button" aria-label="Close">✕</button>
+          </div>
+
+          <div class="modal-body">
+            <label class="field">
+              <span class="label">Title</span>
+              <input class="input" id="tTitle" type="text" placeholder="e.g. Finish client logo revisions" />
+            </label>
+
+            <div class="row">
+              <label class="field">
+                <span class="label">Priority</span>
+                <select class="input" id="tPriority">
+                  <option value="high">High</option>
+                  <option value="med" selected>Medium</option>
+                  <option value="low">Low</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span class="label">Status</span>
+                <select class="input" id="tStatus">
+                  <option value="todo" selected>Todo</option>
+                  <option value="doing">Doing</option>
+                  <option value="done">Done</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="row">
+              <!-- Due date (native picker) -->
+              <label class="field date-field">
+                <span class="label">Due date</span>
+                <input class="input" id="tDueDate" type="date" min="" />
+              </label>
+
+              <!-- Due time (our modal picker) -->
+              <label class="field">
+                <span class="label">Due time</span>
+
+                <div class="timeRow">
+                  <button class="timeBtn" id="btnOpenTime" type="button">
+                    <span id="timeLabel">Select time</span>
+                    <span class="timeChevron">▾</span>
+                  </button>
+
+                  <button class="timeClear hidden" id="btnClearTime" type="button" title="Clear time">✕</button>
+                </div>
+
+                <input type="hidden" id="tDueTime" value="" />
+              </label>
+            </div>
+
+            <label class="field">
+              <span class="label">Category</span>
+              <input class="input" id="tCategory" type="text" placeholder="client / personal / admin" />
+            </label>
+
+            <label class="field">
+              <span class="label">Notes (optional)</span>
+              <input class="input" id="tNotes" type="text" placeholder="Any extra info..." />
+            </label>
+
+            <label class="field">
+              <span class="label">Progress (0–100)</span>
+              <input class="input" id="tProgress" type="number" min="0" max="100" step="1" value="0" inputmode="numeric" />
+            </label>
+          </div>
+
+          <div class="modal-foot">
+            <button class="btn ghost" id="btnCancelTask" type="button">Cancel</button>
+            <button class="btn primary" id="btnSaveTask" type="button">Save Task</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIME PICKER MODAL -->
+      <div class="modal hidden" id="timeModal" aria-hidden="true">
+        <div class="modal-card timeModalCard">
+          <div class="modal-head">
+            <div class="modal-title">Pick time</div>
+            <button class="iconBtn sm" id="btnCloseTime" type="button" aria-label="Close">✕</button>
+          </div>
+
+          <div class="timeBody">
+            <label class="field">
+              <span class="label">Quick select</span>
+              <select class="input" id="timeSelect">
+                <option value="" selected>Select time</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span class="label">Manual (HH:MM)</span>
+              <input
+                class="input"
+                id="timeManualInside"
+                type="text"
+                inputmode="numeric"
+                placeholder="HH:MM"
+                maxlength="5"
+              />
+            </label>
+          </div>
+
+          <div class="modal-foot">
+            <button class="btn ghost" id="btnTimeNow" type="button">Now</button>
+            <button class="btn primary" id="btnTimeApply" type="button">Apply</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- PAGE LOGIC -->
+  <script src="tasks.js"></script>
+
+  <!-- small sidebar toggle for mobile + collapse -->
+  <script>
+    const app = document.getElementById("app");
+    const sidebar = document.getElementById("sidebar");
+    document.getElementById("btnCollapse")?.addEventListener("click", () => {
+      app.classList.toggle("collapsed");
+    });
+    document.getElementById("btnSidebarToggle")?.addEventListener("click", () => {
+      sidebar.classList.toggle("open");
+    });
+  </script>
+</body>
+</html>
